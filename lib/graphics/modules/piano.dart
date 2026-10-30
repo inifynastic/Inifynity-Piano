@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../services/pianocore.dart';
 
-List<GestureDetector> whiteNotes = [];
-List<GestureDetector> blackNotes = [];
+void whiteKeyDown(TapDownDetails i) {}
+void whiteKeyUp([TapUpDetails? i]) {}
+void blackKeyDown(TapDownDetails i) {}
+void blackKeyUp([TapUpDetails? i]) {}
 
 final Widget piano = SizedBox(
   height: 150,
@@ -22,8 +25,12 @@ final Widget piano = SizedBox(
           ),
       ];
 
-      final List<GestureDetector> whiteNotes = [
-        for (int i = 0; i < 52; i++) GestureDetector(child: whiteKeys[i],),
+      List<GestureDetector> whiteNotes = [
+        for (int i = 0; i < 52; i++) GestureDetector(
+          onTapDown: whiteKeyDown,
+          onTapUp: whiteKeyUp,
+          child: whiteKeys[i],
+        ),
       ];
 
       final List<Positioned> blackNotes = [
@@ -39,6 +46,9 @@ final Widget piano = SizedBox(
               width: blackWidth,
               height: 0.6 * constraints.maxHeight,
               child: GestureDetector(
+                 onTapDown: blackKeyDown,
+                 onTapUp: blackKeyUp,
+                 onTapCancel: blackKeyUp,
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.black,
@@ -61,9 +71,3 @@ final Widget piano = SizedBox(
     },
   ),
 );
-
-(List<GestureDetector>, List<GestureDetector>) getkeys() {
-  // Populate both lists...
-
-  return (whiteNotes, blackNotes);
-}
